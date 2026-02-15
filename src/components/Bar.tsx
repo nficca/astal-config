@@ -1,13 +1,6 @@
-import app from "ags/gtk4/app";
 import { createState, createComputed } from "ags";
 
-app.start({
-    main() {
-        return <Bar />;
-    },
-});
-
-function Bar() {
+export function Bar() {
     return (
         <window visible>
             <box>
