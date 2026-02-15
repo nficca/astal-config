@@ -1,13 +1,8 @@
 import app from "ags/gtk4/app"
-import { Astal } from "ags/gtk4"
-import { createPoll } from "ags/time"
 import { createState, createComputed } from "ags"
 
 app.start({
     main() {
-        const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
-        const clock = createPoll("", 1000, "date")
-
         return <Bar />
     },
 })
