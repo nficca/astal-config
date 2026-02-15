@@ -14,9 +14,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.astal.follows = "astal";
     };
+
+    anynode = {
+      url = "github:nficca/nix-anynode";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, ags, astal }:
+  outputs = { self, nixpkgs, ags, astal, anynode }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -71,6 +76,7 @@
           (ags.packages.${system}.default.override {
             inherit extraPackages;
           })
+          anynode.packages.${system}."v24.13.1"
         ];
       };
     };
