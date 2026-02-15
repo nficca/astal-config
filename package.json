@@ -2,7 +2,8 @@
     "name": "astal-config",
     "type": "module",
     "scripts": {
-        "postinstall": "ags types -u -d ."
+        "postinstall": "ags types -u -d .",
+        "start": "ags run app.tsx"
     },
     "devDependencies": {
         "@eslint/js": "^9.0.0",
