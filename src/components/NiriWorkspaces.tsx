@@ -1,8 +1,7 @@
 import { Gdk } from "ags/gtk4";
 import AstalNiri from "gi://AstalNiri?version=0.1";
 import { createBinding, createComputed, For, With } from "gnim";
-import Applications from "../services/applications";
-
+import * as applications from "../services/applications";
 const niri = AstalNiri.get_default();
 
 export type NiriWorkspacesProps = {
@@ -53,7 +52,9 @@ function Workspace({ workspace }: WorkspaceProps) {
     return (
         <box class="workspace" visible={visible}>
             <With value={index}>
-                {index => <label class="workspace-index" label={String(index)} />}
+                {index => (
+                    <label class="workspace-index" label={String(index)} />
+                )}
             </With>
             <box class="workspace-windows">
                 <For each={windows}>
@@ -69,14 +70,14 @@ type WorkspaceWindowProps = {
 };
 
 function WorkspaceWindow({ window }: WorkspaceWindowProps) {
-    const app = createBinding(window, "app_id").as(id =>
-        Applications.fuzzy_query(id).at(0),
-    );
+    const app = createBinding(window, "app_id").as(id => applications.find(id));
 
     return (
         <box class="workspace-window">
             <With value={app}>
-                {app => app && <image icon_name={app.icon_name} pixel_size={24} />}
+                {app =>
+                    app && <image icon_name={app.icon_name} pixel_size={24} />
+                }
             </With>
         </box>
     );
