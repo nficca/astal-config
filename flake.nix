@@ -29,10 +29,11 @@
       entry = "src/app.tsx";
 
       astalPackages = with ags.packages.${system}; [
-        io
+        apps
         astal4
         battery
         bluetooth
+        io
         mpris
         network
         niri

@@ -1,1 +1,20 @@
 // Your styles here
+
+.workspaces {
+  .workspace {
+    padding: 4px;
+    border-radius: 8px;
+    background: #dee5fa;
+
+    .workspace-index {
+      font-weight: bold;
+      margin-right: 2px;
+    }
+
+    .workspace-windows {
+      image {
+        margin: 0;
+      }
+    }
+  }
+}
