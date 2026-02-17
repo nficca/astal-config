@@ -20,6 +20,7 @@ app.start({
                             gdkmonitor={monitor}
                             anchor={TOP | LEFT | RIGHT}
                             application={app}
+                            exclusivity={Astal.Exclusivity.EXCLUSIVE}
                         >
                             <Bar monitor={monitor} />
                         </window>
