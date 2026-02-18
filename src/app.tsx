@@ -2,7 +2,7 @@ import app from "ags/gtk4/app";
 import { Astal } from "ags/gtk4";
 import { Bar } from "./components/Bar";
 import { createBinding, For, This } from "gnim";
-import style from "../style.scss";
+import style from "../assets/styles/index.scss";
 
 const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
 
