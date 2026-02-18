@@ -1,6 +1,7 @@
 import { Gdk } from "ags/gtk4";
 import AstalNiri from "gi://AstalNiri?version=0.1";
-import { createBinding, createComputed, For, With } from "gnim";
+import Gtk from "gi://Gtk?version=4.0";
+import { createBinding, createMemo, For, With } from "gnim";
 import * as applications from "../services/applications";
 const niri = AstalNiri.get_default();
 
@@ -47,20 +48,29 @@ type WorkspaceProps = {
 function Workspace({ workspace }: WorkspaceProps) {
     const index = createBinding(workspace, "idx");
     const windows = createBinding(workspace, "windows");
+    const isActive = createBinding(workspace, "is_active");
+    const cssClasses = createMemo(() => {
+        const classes = ["workspace"];
+        if (isActive()) classes.push("active");
+        if (windows().length === 0) classes.push("empty");
+        return classes;
+    });
 
     return (
-        <box class="workspace">
-            <With value={index}>
-                {index => (
-                    <label class="workspace-index" label={String(index)} />
-                )}
-            </With>
-            <box class="workspace-windows">
-                <For each={windows}>
-                    {window => <WorkspaceWindow window={window} />}
-                </For>
+        <button
+            cssClasses={cssClasses}
+            onClicked={() => workspace.focus()}
+            onRealize={btn => btn.set_cursor_from_name("pointer")}
+        >
+            <box halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER}>
+                <label class="workspace-index" label={index.as(String)} />
+                <box class="workspace-windows">
+                    <For each={windows}>
+                        {window => <WorkspaceWindow window={window} />}
+                    </For>
+                </box>
             </box>
-        </box>
+        </button>
     );
 }
 
