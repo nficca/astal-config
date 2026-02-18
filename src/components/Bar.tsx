@@ -1,5 +1,6 @@
-import Gdk from "gi://Gdk?version=4.0";
 import { NiriWorkspaces } from "./NiriWorkspaces";
+import { DateTime } from "./DateTime";
+import { Gdk, Gtk } from "ags/gtk4";
 
 export type BarProps = {
     monitor: Gdk.Monitor;
@@ -7,8 +8,9 @@ export type BarProps = {
 
 export function Bar({ monitor }: BarProps) {
     return (
-        <box>
-            <NiriWorkspaces monitor={monitor} />
-        </box>
+        <centerbox orientation={Gtk.Orientation.HORIZONTAL}>
+            <NiriWorkspaces $type="start" monitor={monitor} />
+            <DateTime $type="end" />
+        </centerbox>
     );
 }
