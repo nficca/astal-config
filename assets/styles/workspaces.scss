@@ -1,10 +1,11 @@
-// Your styles here
+@use "colors" as *;
 
 .workspaces {
   .workspace {
     padding: 4px;
     border-radius: 8px;
-    background: #dee5fa;
+    background: $bg;
+    color: $fg;
 
     .workspace-index {
       font-weight: bold;

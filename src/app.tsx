@@ -16,6 +16,7 @@ app.start({
                 {monitor => (
                     <This this={app}>
                         <window
+                            class="bar"
                             visible
                             gdkmonitor={monitor}
                             anchor={TOP | LEFT | RIGHT}
