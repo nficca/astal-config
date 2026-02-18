@@ -47,10 +47,9 @@ type WorkspaceProps = {
 function Workspace({ workspace }: WorkspaceProps) {
     const index = createBinding(workspace, "idx");
     const windows = createBinding(workspace, "windows");
-    const visible = createComputed(() => windows().length > 0);
 
     return (
-        <box class="workspace" visible={visible}>
+        <box class="workspace">
             <With value={index}>
                 {index => (
                     <label class="workspace-index" label={String(index)} />
