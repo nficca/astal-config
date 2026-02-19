@@ -57,7 +57,7 @@ function Workspace({ workspace }: WorkspaceProps) {
     const isActive = createBinding(workspace, "is_active");
     const isEmpty = createMemo(() => windows().length === 0);
     const cssClasses = createMemo(() => {
-        const classes = ["workspace"];
+        const classes = ["workspace", "bar-segment"];
         if (isActive()) classes.push("active");
         return classes;
     });

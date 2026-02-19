@@ -53,7 +53,7 @@ export function Audio({ scroll_step }: AudioProps) {
     };
 
     return (
-        <menubutton class="audio" $={setup}>
+        <menubutton class="audio bar-segment" $={setup}>
             <box spacing={4}>
                 <image iconName={volumeIcon} />
                 <label label={volumeText} />

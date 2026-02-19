@@ -3,8 +3,6 @@
 
 .workspaces {
     .workspace {
-        @include bar.bar-component;
-
         &:hover {
             background: $bg-hover;
         }

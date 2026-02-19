@@ -12,7 +12,7 @@ export function DateTime() {
     );
 
     return (
-        <box class="datetime">
+        <box class="datetime bar-segment">
             <label label={formatted} />
         </box>
     );

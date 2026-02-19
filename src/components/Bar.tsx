@@ -9,7 +9,7 @@ export type BarProps = {
 
 export function Bar({ monitor }: BarProps) {
     return (
-        <centerbox orientation={Gtk.Orientation.HORIZONTAL}>
+        <centerbox class="bar" orientation={Gtk.Orientation.HORIZONTAL}>
             <box $type="start">
                 <NiriWorkspaces monitor={monitor} />
             </box>

@@ -1,6 +1,6 @@
 @use "colors" as *;
 
-@mixin bar-component {
+@mixin bar-segment {
     padding: 2px 16px;
     border-radius: 9999px;
     border: 1px solid $border;
@@ -8,9 +8,28 @@
     color: $fg;
 }
 
-window.bar {
-  margin-left: 12px;
-  margin-right: 12px;
-  margin-top: 2px;
-  background: transparent;
+.bar {
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-top: 2px;
+
+    box,
+    centerbox {
+        &.bar-segment {
+            @include bar-segment;
+        }
+    }
+
+    button.bar-segment,
+    menubutton.bar-segment > button {
+        @include bar-segment;
+
+        &:hover {
+            background: $bg-hover;
+        }
+
+        &:active {
+            background: $bg-active;
+        }
+    }
 }

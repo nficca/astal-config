@@ -1,19 +1,6 @@
 @use "colors" as *;
-@use "bar";
 
 .audio {
-    > button {
-        @include bar.bar-component;
-
-        &:hover {
-            background: $bg-hover;
-        }
-
-        &:active {
-            background: $bg-active;
-        }
-    }
-
     label {
         font-weight: 500;
         min-width: 3.5em;
