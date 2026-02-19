@@ -16,7 +16,7 @@ export function Audio({ scroll_step }: AudioProps) {
         console.warn(
             "Can't create audio component - no default Wireplumber object",
         );
-        return null;
+        return <></>;
     }
 
     const audio = wp.audio;
