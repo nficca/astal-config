@@ -1,11 +1,7 @@
-@use "colors" as *;
+@use "bar";
 
 .datetime {
-    padding: 4px 16px;
-    border-radius: 9999px;
-    border: 1px solid $border;
-    background: $bg;
-    color: $fg;
+    @include bar.bar-component;
 
     label {
         font-weight: 500;

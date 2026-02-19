@@ -1,12 +1,9 @@
 @use "colors" as *;
+@use "bar";
 
 .workspaces {
     .workspace {
-        padding: 0px 16px;
-        border-radius: 9999px;
-        border: 1px solid $border;
-        background: $bg;
-        color: $fg;
+        @include bar.bar-component;
 
         &:hover {
             background: $bg-hover;
@@ -16,30 +13,10 @@
             background: $bg-active;
         }
 
-        .workspace-index {
-            font-weight: bold;
-            margin-right: 16px;
-        }
-
         &.active {
             background: $accent;
             border-color: $accent-border;
             color: white;
-        }
-
-        &.empty {
-            padding: 4px;
-            min-width: 32px;
-            min-height: 32px;
-
-            .workspace-index {
-                margin-right: 0;
-            }
-
-            .workspace-windows {
-                min-width: 0;
-                min-height: 0;
-            }
         }
     }
 }

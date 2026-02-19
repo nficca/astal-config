@@ -46,13 +46,12 @@ type WorkspaceProps = {
 };
 
 function Workspace({ workspace }: WorkspaceProps) {
-    const index = createBinding(workspace, "idx");
     const windows = createBinding(workspace, "windows");
     const isActive = createBinding(workspace, "is_active");
+    const isEmpty = createMemo(() => windows().length === 0);
     const cssClasses = createMemo(() => {
         const classes = ["workspace"];
         if (isActive()) classes.push("active");
-        if (windows().length === 0) classes.push("empty");
         return classes;
     });
 
@@ -63,8 +62,12 @@ function Workspace({ workspace }: WorkspaceProps) {
             onRealize={btn => btn.set_cursor_from_name("pointer")}
         >
             <box halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER}>
-                <label class="workspace-index" label={index.as(String)} />
-                <box class="workspace-windows">
+                <image
+                    visible={isEmpty}
+                    icon_name="plus-large-symbolic"
+                    pixel_size={16}
+                />
+                <box visible={createMemo(() => !isEmpty())}>
                     <For each={windows}>
                         {window => <WorkspaceWindow window={window} />}
                     </For>
