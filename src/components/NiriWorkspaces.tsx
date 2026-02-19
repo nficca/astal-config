@@ -46,7 +46,14 @@ type WorkspaceProps = {
 };
 
 function Workspace({ workspace }: WorkspaceProps) {
-    const windows = createBinding(workspace, "windows");
+    const windows = createBinding(workspace, "windows").as(windows => {
+        const seen = new Set<string>();
+        return windows.filter(w => {
+            if (seen.has(w.app_id)) return false;
+            seen.add(w.app_id);
+            return true;
+        });
+    });
     const isActive = createBinding(workspace, "is_active");
     const isEmpty = createMemo(() => windows().length === 0);
     const cssClasses = createMemo(() => {
@@ -64,7 +71,7 @@ function Workspace({ workspace }: WorkspaceProps) {
             <box halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER}>
                 <image
                     visible={isEmpty}
-                    icon_name="plus-large-symbolic"
+                    icon_name="list-add-symbolic"
                     pixel_size={16}
                 />
                 <box visible={createMemo(() => !isEmpty())}>
