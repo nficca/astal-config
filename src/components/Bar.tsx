@@ -12,7 +12,7 @@ export function Bar({ monitor }: BarProps) {
         <centerbox orientation={Gtk.Orientation.HORIZONTAL}>
             <NiriWorkspaces $type="start" monitor={monitor} />
             <box $type="end">
-                <Audio />
+                <Audio scroll_step={5} />
                 <DateTime />
             </box>
         </centerbox>

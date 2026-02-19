@@ -5,28 +5,33 @@ import { Accessor, createBinding, createComputed, For } from "gnim";
 
 const wp = AstalWp.get_default();
 
-export function Audio() {
-    const audio = wp?.audio;
-    if (!audio) {
-        return (
-            <box class="audio">
-                <label label="--%" />
-            </box>
+export type AudioProps = {
+    scroll_step?: number;
+};
+
+export function Audio({ scroll_step }: AudioProps) {
+    scroll_step = scroll_step ?? 2;
+
+    if (!wp) {
+        console.warn(
+            "Can't create audio component - no default Wireplumber object",
         );
+        return null;
     }
 
+    const audio = wp.audio;
     const speaker = audio.defaultSpeaker;
     const volume = createBinding(speaker, "volume");
     const mute = createBinding(speaker, "mute");
     const speakers = createBinding(audio, "speakers");
-    const description = createBinding(speaker, "description")((d) => d || "");
+    const description = createBinding(speaker, "description")(d => d || "");
 
-    const displayText = createComputed(() => {
+    const volumeText = createComputed(() => {
         if (mute()) return "muted";
         return `${Math.round(volume() * 100)}%`;
     });
 
-    const iconName = createComputed(() => {
+    const volumeIcon = createComputed(() => {
         if (mute()) return "audio-volume-muted-symbolic";
         const vol = volume();
         if (vol > 0.66) return "audio-volume-high-symbolic";
@@ -38,10 +43,15 @@ export function Audio() {
         const scrollController = new Gtk.EventControllerScroll();
         scrollController.set_flags(Gtk.EventControllerScrollFlags.VERTICAL);
         scrollController.connect("scroll", (_ctrl, _dx, dy) => {
+            const current = Math.trunc(speaker.volume * 100);
             if (dy < 0) {
-                speaker.set_volume(Math.min(1, speaker.volume + 0.02));
+                const next =
+                    ceil_to_multiple(current + scroll_step, scroll_step) / 100;
+                speaker.set_volume(Math.min(1, next));
             } else {
-                speaker.set_volume(Math.max(0, speaker.volume - 0.02));
+                const next =
+                    floor_to_multiple(current - scroll_step, scroll_step) / 100;
+                speaker.set_volume(Math.max(0, next));
             }
         });
         self.add_controller(scrollController);
@@ -50,21 +60,26 @@ export function Audio() {
     return (
         <menubutton class="audio" $={setup}>
             <box spacing={4}>
-                <image iconName={iconName} />
-                <label label={displayText} />
+                <image iconName={volumeIcon} />
+                <label label={volumeText} />
             </box>
             <popover class="audio-popup" hasArrow={false} autohide={true}>
                 <box orientation={Gtk.Orientation.VERTICAL} spacing={12}>
                     <box class="audio-slider-box" spacing={8}>
-                        <image iconName={iconName} />
+                        <image iconName={volumeIcon} />
                         <slider
                             hexpand
                             widthRequest={150}
                             value={volume}
-                            onChangeValue={({ value }) => speaker.set_volume(value)}
+                            onChangeValue={({ value }) =>
+                                speaker.set_volume(value)
+                            }
                         />
                     </box>
-                    <OutputSelector speakers={speakers} description={description} />
+                    <OutputSelector
+                        speakers={speakers}
+                        description={description}
+                    />
                 </box>
             </popover>
         </menubutton>
@@ -81,11 +96,15 @@ function OutputSelector({ speakers, description }: OutputSelectorProps) {
 
     return (
         <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-            <label label="Output" halign={Gtk.Align.START} class="audio-output-label" />
+            <label
+                label="Output"
+                halign={Gtk.Align.START}
+                class="audio-output-label"
+            />
             <button
                 class="audio-output-selector"
                 focusOnClick={false}
-                onClicked={(self) => {
+                onClicked={self => {
                     if (!popover.get_parent()) {
                         popover.set_parent(self);
                     }
@@ -105,14 +124,19 @@ function OutputSelector({ speakers, description }: OutputSelectorProps) {
             <popover
                 class="audio-output-popover"
                 hasArrow={false}
-                $={(self) => (popover = self)}
+                $={self => (popover = self)}
             >
                 <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
                     <For each={speakers}>
-                        {(spk) => (
+                        {spk => (
                             <button
-                                class={createBinding(spk, "is_default")((d) =>
-                                    d ? "audio-output-item active" : "audio-output-item"
+                                class={createBinding(
+                                    spk,
+                                    "is_default",
+                                )(d =>
+                                    d
+                                        ? "audio-output-item active"
+                                        : "audio-output-item",
                                 )}
                                 onClicked={() => {
                                     spk.set_is_default(true);
@@ -130,4 +154,22 @@ function OutputSelector({ speakers, description }: OutputSelectorProps) {
             </popover>
         </box>
     );
+}
+
+function ceil_to_multiple(value: number, multiple: number): number {
+    const rem = value % multiple;
+    if (rem === 0) {
+        return value;
+    }
+
+    return value + multiple - rem;
+}
+
+function floor_to_multiple(value: number, multiple: number): number {
+    const rem = value % multiple;
+    if (rem === 0) {
+        return value;
+    }
+
+    return value - rem;
 }
