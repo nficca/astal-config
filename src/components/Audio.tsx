@@ -101,18 +101,24 @@ function AudioPopover({
                         onChangeValue={({ value }) => onVolumeChange(value)}
                     />
                 </box>
-                <OutputSelector speakers={speakers} description={description} />
+                <AudioOutputSelector
+                    speakers={speakers}
+                    description={description}
+                />
             </box>
         </popover>
     );
 }
 
-interface OutputSelectorProps {
+interface AudioOutputSelectorProps {
     speakers: Accessor<AstalWp.Endpoint[]>;
     description: Accessor<string>;
 }
 
-function OutputSelector({ speakers, description }: OutputSelectorProps) {
+function AudioOutputSelector({
+    speakers,
+    description,
+}: AudioOutputSelectorProps) {
     return (
         <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
             <label label="Output" halign={Gtk.Align.START} />
@@ -126,28 +132,44 @@ function OutputSelector({ speakers, description }: OutputSelectorProps) {
                     />
                     <image iconName="pan-down-symbolic" />
                 </box>
-                <popover hasArrow={false}>
-                    <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-                        <For each={speakers}>
-                            {spk => (
-                                <button
-                                    cssClasses={createBinding(
-                                        spk,
-                                        "is_default",
-                                    )(d => (d ? ["active"] : []))}
-                                    onClicked={() => spk.set_is_default(true)}
-                                >
-                                    <label
-                                        label={spk.description}
-                                        halign={Gtk.Align.START}
-                                    />
-                                </button>
-                            )}
-                        </For>
-                    </box>
-                </popover>
+                <AudioOutputSelectorPopover speakers={speakers} />
             </menubutton>
         </box>
+    );
+}
+
+interface AudioOutputSelectorPopoverProps {
+    speakers: Accessor<AstalWp.Endpoint[]>;
+}
+
+function AudioOutputSelectorPopover({
+    speakers,
+}: AudioOutputSelectorPopoverProps) {
+    return (
+        <popover hasArrow={false}>
+            <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
+                <For each={speakers}>
+                    {spk => {
+                        const cssClasses = createBinding(
+                            spk,
+                            "is_default",
+                        ).as(d => (d ? ["active"] : []));
+
+                        return (
+                            <button
+                                cssClasses={cssClasses}
+                                onClicked={() => spk.set_is_default(true)}
+                            >
+                                <label
+                                    label={spk.description}
+                                    halign={Gtk.Align.START}
+                                />
+                            </button>
+                        );
+                    }}
+                </For>
+            </box>
+        </popover>
     );
 }
 
