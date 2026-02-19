@@ -63,26 +63,47 @@ export function Audio({ scroll_step }: AudioProps) {
                 <image iconName={volumeIcon} />
                 <label label={volumeText} />
             </box>
-            <popover hasArrow={false} autohide={true}>
-                <box orientation={Gtk.Orientation.VERTICAL} spacing={12}>
-                    <box spacing={8}>
-                        <image iconName={volumeIcon} />
-                        <slider
-                            hexpand
-                            widthRequest={150}
-                            value={volume}
-                            onChangeValue={({ value }) =>
-                                speaker.set_volume(value)
-                            }
-                        />
-                    </box>
-                    <OutputSelector
-                        speakers={speakers}
-                        description={description}
+            <AudioPopover
+                volumeIcon={volumeIcon}
+                volume={volume}
+                speakers={speakers}
+                description={description}
+                onVolumeChange={v => speaker.set_volume(v)}
+            />
+        </menubutton>
+    );
+}
+
+interface AudioPopoverProps {
+    volumeIcon: Accessor<string>;
+    volume: Accessor<number>;
+    speakers: Accessor<AstalWp.Endpoint[]>;
+    description: Accessor<string>;
+    onVolumeChange: (value: number) => void;
+}
+
+function AudioPopover({
+    volumeIcon,
+    volume,
+    speakers,
+    description,
+    onVolumeChange,
+}: AudioPopoverProps) {
+    return (
+        <popover hasArrow={false} autohide={true}>
+            <box orientation={Gtk.Orientation.VERTICAL} spacing={12}>
+                <box spacing={8}>
+                    <image iconName={volumeIcon} />
+                    <slider
+                        hexpand
+                        widthRequest={150}
+                        value={volume}
+                        onChangeValue={({ value }) => onVolumeChange(value)}
                     />
                 </box>
-            </popover>
-        </menubutton>
+                <OutputSelector speakers={speakers} description={description} />
+            </box>
+        </popover>
     );
 }
 
