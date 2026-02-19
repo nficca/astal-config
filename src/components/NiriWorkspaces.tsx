@@ -33,7 +33,7 @@ function Workspaces({ output }: WorkspacesProps) {
     );
 
     return (
-        <box class="workspaces" spacing={10}>
+        <box class="workspaces" spacing={4}>
             <For each={workspaces}>
                 {workspace => <Workspace workspace={workspace} />}
             </For>
