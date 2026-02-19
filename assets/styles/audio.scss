@@ -1,0 +1,111 @@
+@use "colors" as *;
+@use "bar";
+
+.audio {
+    > button {
+        @include bar.bar-component;
+
+        &:hover {
+            background: $bg-hover;
+        }
+
+        &:active {
+            background: $bg-active;
+        }
+    }
+
+    label {
+        font-weight: 500;
+        min-width: 3.5em;
+    }
+}
+
+popover.audio-popup {
+    arrow, contents {
+        background: $bg;
+        border: 1px solid $border;
+    }
+
+    contents {
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.audio-slider-box {
+    scale {
+        padding: 0;
+
+        trough {
+            all: unset;
+            background: $bg-hover;
+            min-height: 18px;
+            border-radius: 8px;
+        }
+
+        highlight {
+            all: unset;
+            min-height: 18px;
+            border-radius: 8px;
+            background: $accent;
+        }
+
+        slider {
+            all: unset;
+            border-radius: 8px;
+            margin: 0;
+        }
+    }
+}
+
+.audio-output-label {
+    font-size: 0.85em;
+    opacity: 0.7;
+}
+
+.audio-output-selector {
+    background: $bg-hover;
+    border-radius: 6px;
+    padding: 6px 10px;
+
+    &:hover {
+        background: $bg-active;
+    }
+
+    label {
+        min-width: 0;
+    }
+}
+
+popover.audio-output-popover {
+    arrow, contents {
+        background: $bg;
+        border: 1px solid $border;
+    }
+
+    contents {
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.audio-output-item {
+    background: transparent;
+    border-radius: 4px;
+    padding: 6px 10px;
+
+    &:hover {
+        background: $bg-hover;
+    }
+
+    &.active {
+        background: $accent;
+        color: $bg;
+    }
+
+    label {
+        min-width: 0;
+    }
+}
