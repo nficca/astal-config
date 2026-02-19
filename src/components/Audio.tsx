@@ -63,9 +63,9 @@ export function Audio({ scroll_step }: AudioProps) {
                 <image iconName={volumeIcon} />
                 <label label={volumeText} />
             </box>
-            <popover class="audio-popup" hasArrow={false} autohide={true}>
+            <popover hasArrow={false} autohide={true}>
                 <box orientation={Gtk.Orientation.VERTICAL} spacing={12}>
-                    <box class="audio-slider-box" spacing={8}>
+                    <box spacing={8}>
                         <image iconName={volumeIcon} />
                         <slider
                             hexpand
@@ -94,12 +94,8 @@ interface OutputSelectorProps {
 function OutputSelector({ speakers, description }: OutputSelectorProps) {
     return (
         <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-            <label
-                label="Output"
-                halign={Gtk.Align.START}
-                class="audio-output-label"
-            />
-            <menubutton class="audio-output-selector">
+            <label label="Output" halign={Gtk.Align.START} />
+            <menubutton>
                 <box hexpand>
                     <label
                         label={description}
@@ -109,19 +105,15 @@ function OutputSelector({ speakers, description }: OutputSelectorProps) {
                     />
                     <image iconName="pan-down-symbolic" />
                 </box>
-                <popover class="audio-output-popover" hasArrow={false}>
+                <popover hasArrow={false}>
                     <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
                         <For each={speakers}>
                             {spk => (
                                 <button
-                                    class={createBinding(
+                                    cssClasses={createBinding(
                                         spk,
                                         "is_default",
-                                    )(d =>
-                                        d
-                                            ? "audio-output-item active"
-                                            : "audio-output-item",
-                                    )}
+                                    )(d => (d ? ["active"] : []))}
                                     onClicked={() => spk.set_is_default(true)}
                                 >
                                     <label

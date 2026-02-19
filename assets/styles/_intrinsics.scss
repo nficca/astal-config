@@ -1,0 +1,97 @@
+@use "colors" as *;
+
+// Base popover styling - applies to all popovers
+popover {
+    margin-top: 8px;
+
+    arrow,
+    contents {
+        background: $bg;
+        border: 1px solid $border;
+    }
+
+    contents {
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}
+
+// MenuButtons inside popovers (secondary/nested context)
+// Top-level bar menubuttons should use bar-component mixin instead
+popover menubutton > button {
+    padding: 0;
+    background: $bg;
+    border-radius: 8px;
+    border: 1px solid $border;
+
+    &:hover {
+        background: $bg-hover;
+    }
+
+    contents {
+        padding: 8px 12px;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+    }
+}
+
+// Slider styling - applies to all scale widgets
+scale {
+    padding: 0;
+
+    trough {
+        all: unset;
+        background: $bg-hover;
+        min-height: 18px;
+        border-radius: 8px;
+    }
+
+    highlight {
+        all: unset;
+        min-height: 18px;
+        border-radius: 8px;
+        background: $accent;
+    }
+
+    slider {
+        all: unset;
+        border-radius: 8px;
+        margin: 0;
+    }
+}
+
+// List-item buttons inside popovers
+// (menubutton > button rule above has higher specificity for those cases)
+popover button {
+    background: transparent;
+    border-radius: 4px;
+    padding: 6px 10px;
+
+    &:hover {
+        background: $bg-hover;
+    }
+
+    &.active {
+        background: $accent;
+        color: $bg;
+    }
+
+    label {
+        min-width: 0;
+    }
+}
+
+// Section-heading labels in popovers
+popover label {
+    font-size: 0.85em;
+    opacity: 0.7;
+}
+
+// Reset for labels inside interactive elements
+popover button label,
+popover menubutton label {
+    font-size: unset;
+    opacity: unset;
+}
