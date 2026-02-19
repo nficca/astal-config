@@ -44,15 +44,10 @@ export function Audio({ scroll_step }: AudioProps) {
         scrollController.set_flags(Gtk.EventControllerScrollFlags.VERTICAL);
         scrollController.connect("scroll", (_ctrl, _dx, dy) => {
             const current = Math.trunc(speaker.volume * 100);
-            if (dy < 0) {
-                const next =
-                    ceil_to_multiple(current + scroll_step, scroll_step) / 100;
-                speaker.set_volume(Math.min(1, next));
-            } else {
-                const next =
-                    floor_to_multiple(current - scroll_step, scroll_step) / 100;
-                speaker.set_volume(Math.max(0, next));
-            }
+            const delta = dy < 0 ? scroll_step : -scroll_step;
+            const round = dy < 0 ? ceil_to_multiple : floor_to_multiple;
+            const next = round(current + delta, scroll_step) / 100;
+            speaker.set_volume(Math.max(0, Math.min(1, next)));
         });
         self.add_controller(scrollController);
     };
@@ -150,10 +145,9 @@ function AudioOutputSelectorPopover({
             <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
                 <For each={speakers}>
                     {spk => {
-                        const cssClasses = createBinding(
-                            spk,
-                            "is_default",
-                        ).as(d => (d ? ["active"] : []));
+                        const cssClasses = createBinding(spk, "is_default").as(
+                            d => (d ? ["active"] : []),
+                        );
 
                         return (
                             <button
