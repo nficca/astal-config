@@ -92,8 +92,6 @@ interface OutputSelectorProps {
 }
 
 function OutputSelector({ speakers, description }: OutputSelectorProps) {
-    let popover: Gtk.Popover;
-
     return (
         <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
             <label
@@ -101,16 +99,7 @@ function OutputSelector({ speakers, description }: OutputSelectorProps) {
                 halign={Gtk.Align.START}
                 class="audio-output-label"
             />
-            <button
-                class="audio-output-selector"
-                focusOnClick={false}
-                onClicked={self => {
-                    if (!popover.get_parent()) {
-                        popover.set_parent(self);
-                    }
-                    popover.popup();
-                }}
-            >
+            <menubutton class="audio-output-selector">
                 <box hexpand>
                     <label
                         label={description}
@@ -120,38 +109,31 @@ function OutputSelector({ speakers, description }: OutputSelectorProps) {
                     />
                     <image iconName="pan-down-symbolic" />
                 </box>
-            </button>
-            <popover
-                class="audio-output-popover"
-                hasArrow={false}
-                $={self => (popover = self)}
-            >
-                <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-                    <For each={speakers}>
-                        {spk => (
-                            <button
-                                class={createBinding(
-                                    spk,
-                                    "is_default",
-                                )(d =>
-                                    d
-                                        ? "audio-output-item active"
-                                        : "audio-output-item",
-                                )}
-                                onClicked={() => {
-                                    spk.set_is_default(true);
-                                    popover.popdown();
-                                }}
-                            >
-                                <label
-                                    label={spk.description}
-                                    halign={Gtk.Align.START}
-                                />
-                            </button>
-                        )}
-                    </For>
-                </box>
-            </popover>
+                <popover class="audio-output-popover" hasArrow={false}>
+                    <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
+                        <For each={speakers}>
+                            {spk => (
+                                <button
+                                    class={createBinding(
+                                        spk,
+                                        "is_default",
+                                    )(d =>
+                                        d
+                                            ? "audio-output-item active"
+                                            : "audio-output-item",
+                                    )}
+                                    onClicked={() => spk.set_is_default(true)}
+                                >
+                                    <label
+                                        label={spk.description}
+                                        halign={Gtk.Align.START}
+                                    />
+                                </button>
+                            )}
+                        </For>
+                    </box>
+                </popover>
+            </menubutton>
         </box>
     );
 }
