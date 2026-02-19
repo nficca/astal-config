@@ -10,7 +10,9 @@ export type BarProps = {
 export function Bar({ monitor }: BarProps) {
     return (
         <centerbox orientation={Gtk.Orientation.HORIZONTAL}>
-            <NiriWorkspaces $type="start" monitor={monitor} />
+            <box $type="start">
+                <NiriWorkspaces monitor={monitor} />
+            </box>
             <box $type="end">
                 <Audio scroll_step={5} />
                 <DateTime />
