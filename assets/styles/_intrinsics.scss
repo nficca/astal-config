@@ -11,6 +11,7 @@ popover {
     }
 
     contents {
+        color: $fg;
         border-radius: 8px;
         box-shadow: 0 4px 12px $shadow;
     }

@@ -12,5 +12,10 @@
         &:active {
             background: $bg-active;
         }
+
+        image {
+            -gtk-icon-style: symbolic;
+            color: $fg;
+        }
     }
 }

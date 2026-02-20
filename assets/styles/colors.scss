@@ -2,12 +2,13 @@
 
 $fg: #2d2a26;
 $bg: #faf9f7;
+$accent: #0dbf55;
+$fg-on-accent: #faf9f7;
+$shadow: rgba(0, 0, 0, 0.15);
+
 $bg-hover: color.adjust($bg, $lightness: -10%);
 $bg-active: color.adjust($bg-hover, $lightness: -10%);
 $border: color.adjust($bg, $lightness: -10%);
-$accent: #78aee3;
 $accent-hover: color.adjust($accent, $lightness: -10%);
 $accent-border: color.adjust($accent, $lightness: -10%);
 $accent-active: color.adjust($accent-hover, $lightness: -10%);
-$fg-on-accent: #ffffff;
-$shadow: rgba(0, 0, 0, 0.15);
