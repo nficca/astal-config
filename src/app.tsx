@@ -17,7 +17,7 @@ app.start({
                     <This this={app}>
                         <window
                             visible
-                            css="background: transparent"
+                            css="background: transparent;"
                             gdkmonitor={monitor}
                             anchor={TOP | LEFT | RIGHT}
                             application={app}
