@@ -1,0 +1,16 @@
+@use "colors" as *;
+
+.tray {
+    .tray-item {
+        padding: 2px 4px;
+        border-radius: 4px;
+
+        &:hover {
+            background: $bg-hover;
+        }
+
+        &:active {
+            background: $bg-active;
+        }
+    }
+}

@@ -2,6 +2,7 @@ import { NiriWorkspaces } from "./NiriWorkspaces";
 import { DateTime } from "./DateTime";
 import { Audio } from "./Audio";
 import { Power } from "./Power";
+import { Tray } from "./Tray";
 import { Gdk, Gtk } from "ags/gtk4";
 
 export type BarProps = {
@@ -15,6 +16,7 @@ export function Bar({ monitor }: BarProps) {
                 <NiriWorkspaces monitor={monitor} />
             </box>
             <box $type="end" spacing={8}>
+                <Tray />
                 <Audio scroll_step={5} />
                 <DateTime />
                 <Power />
