@@ -73,7 +73,7 @@ popover button {
         background: $bg-hover;
     }
 
-    &.active {
+    &.highlight {
         background: $accent;
         color: $fg-on-accent;
     }

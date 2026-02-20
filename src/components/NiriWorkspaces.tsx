@@ -58,7 +58,7 @@ function Workspace({ workspace }: WorkspaceProps) {
     const isEmpty = createMemo(() => windows().length === 0);
     const cssClasses = createMemo(() => {
         const classes = ["bar-segment"];
-        if (isActive()) classes.push("active");
+        if (isActive()) classes.push("highlight");
         return classes;
     });
 

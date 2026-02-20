@@ -8,7 +8,7 @@
     color: $fg;
 }
 
-@mixin bar-segment-active {
+@mixin bar-segment-highlight {
     background: $accent;
     border-color: $accent-border;
     color: $fg-on-accent;
@@ -24,7 +24,7 @@
     }
 }
 
-@mixin bar-segment-btn-active {
+@mixin bar-segment-btn-highlight {
     &:hover {
         background: $accent-hover;
     }
@@ -44,8 +44,8 @@
         &.bar-segment {
             @include bar-segment-base;
 
-            &.active {
-                @include bar-segment-active;
+            &.highlight {
+                @include bar-segment-highlight;
             }
         }
     }
@@ -54,9 +54,9 @@
         @include bar-segment-base;
         @include bar-segment-btn-base;
 
-        &.active {
-            @include bar-segment-active;
-            @include bar-segment-btn-active;
+        &.highlight {
+            @include bar-segment-highlight;
+            @include bar-segment-btn-highlight;
         }
     }
 
@@ -66,9 +66,9 @@
             @include bar-segment-btn-base;
         }
 
-        &.active > button {
-            @include bar-segment-active;
-            @include bar-segment-btn-active;
+        &.highlight > button {
+            @include bar-segment-highlight;
+            @include bar-segment-btn-highlight;
         }
     }
 }

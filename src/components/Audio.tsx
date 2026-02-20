@@ -146,7 +146,7 @@ function AudioOutputSelectorPopover({
                 <For each={speakers}>
                     {spk => {
                         const cssClasses = createBinding(spk, "is_default").as(
-                            d => (d ? ["active"] : []),
+                            d => (d ? ["highlight"] : []),
                         );
 
                         return (
