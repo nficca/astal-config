@@ -34,6 +34,7 @@ function TrayItem({ item }: TrayItemProps) {
         self.insert_action_group("dbusmenu", item.action_group);
 
         const showMenu = () => {
+            if (!item.menu_model) return;
             item.about_to_show();
             popover.set_menu_model(item.menu_model);
             popover.popup();
@@ -56,6 +57,12 @@ function TrayItem({ item }: TrayItemProps) {
             }
         });
         self.add_controller(clickController);
+
+        self.connect("destroy", () => {
+            popover.popdown();
+            popover.unparent();
+            self.insert_action_group("dbusmenu", null);
+        });
     };
 
     return (
