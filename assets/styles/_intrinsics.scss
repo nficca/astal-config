@@ -92,7 +92,15 @@ popover label {
 
 // Reset for labels inside interactive elements
 popover button label,
-popover menubutton label {
+popover menubutton label,
+popover modelbutton label {
     font-size: unset;
     opacity: unset;
+}
+
+popover modelbutton arrow {
+    -gtk-icon-style: symbolic;
+    background: transparent;
+    border: none;
+    color: $fg;
 }
