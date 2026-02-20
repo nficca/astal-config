@@ -57,7 +57,7 @@ function Workspace({ workspace }: WorkspaceProps) {
     const isActive = createBinding(workspace, "is_active");
     const isEmpty = createMemo(() => windows().length === 0);
     const cssClasses = createMemo(() => {
-        const classes = ["workspace", "bar-segment"];
+        const classes = ["bar-segment"];
         if (isActive()) classes.push("active");
         return classes;
     });
@@ -92,7 +92,7 @@ function WorkspaceWindow({ window }: WorkspaceWindowProps) {
     const app = createBinding(window, "app_id").as(id => applications.find(id));
 
     return (
-        <box class="workspace-window">
+        <box>
             <With value={app}>
                 {app =>
                     app && <image icon_name={app.icon_name} pixel_size={24} />

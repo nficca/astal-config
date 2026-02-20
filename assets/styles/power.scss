@@ -1,20 +1,7 @@
-@use "sass:color";
 @use "colors" as *;
 
-menubutton.power.bar-segment > button {
-    background: $accent;
-    border-color: $accent-border;
-    color: $fg;
-
-    &:hover {
-        background: $accent-border;
+menubutton.power {
+    > popover button label {
+        font-weight: 400;
     }
-
-    &:active {
-        background: color.adjust($accent-border, $lightness: -10%);
-    }
-}
-
-menubutton.power > popover button label {
-    font-weight: 400;
 }

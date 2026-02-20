@@ -1,11 +1,37 @@
 @use "colors" as *;
 
-@mixin bar-segment {
+@mixin bar-segment-base {
     padding: 2px 16px;
     border-radius: 9999px;
     border: 1px solid $border;
     background: $bg;
     color: $fg;
+}
+
+@mixin bar-segment-active {
+    background: $accent;
+    border-color: $accent-border;
+    color: $fg-on-accent;
+}
+
+@mixin bar-segment-btn-base {
+    &:hover {
+        background: $bg-hover;
+    }
+
+    &:active {
+        background: $bg-active;
+    }
+}
+
+@mixin bar-segment-btn-active {
+    &:hover {
+        background: $accent-hover;
+    }
+
+    &:active {
+        background: $accent-active;
+    }
 }
 
 .bar {
@@ -16,20 +42,33 @@
     box,
     centerbox {
         &.bar-segment {
-            @include bar-segment;
+            @include bar-segment-base;
+
+            &.active {
+                @include bar-segment-active;
+            }
         }
     }
 
-    button.bar-segment,
-    menubutton.bar-segment > button {
-        @include bar-segment;
+    button.bar-segment {
+        @include bar-segment-base;
+        @include bar-segment-btn-base;
 
-        &:hover {
-            background: $bg-hover;
+        &.active {
+            @include bar-segment-active;
+            @include bar-segment-btn-active;
+        }
+    }
+
+    menubutton.bar-segment {
+        > button {
+            @include bar-segment-base;
+            @include bar-segment-btn-base;
         }
 
-        &:active {
-            background: $bg-active;
+        &.active > button {
+            @include bar-segment-active;
+            @include bar-segment-btn-active;
         }
     }
 }

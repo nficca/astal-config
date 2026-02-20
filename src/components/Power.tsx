@@ -3,7 +3,7 @@ import AstalIO from "gi://AstalIO?version=0.1";
 
 export function Power() {
     return (
-        <menubutton class="power bar-segment">
+        <menubutton class="power bar-segment active">
             <image iconName="system-shutdown-symbolic" />
             <PowerPopover />
         </menubutton>

@@ -1,20 +1,4 @@
 @use "colors" as *;
 @use "bar";
 
-.workspaces {
-    .workspace {
-        &:hover {
-            background: $bg-hover;
-        }
-
-        &:active {
-            background: $bg-active;
-        }
-
-        &.active {
-            background: $accent;
-            border-color: $accent-border;
-            color: white;
-        }
-    }
-}
+// .workspaces {}

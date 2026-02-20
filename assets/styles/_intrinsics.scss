@@ -12,7 +12,7 @@ popover {
 
     contents {
         border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 12px $shadow;
     }
 }
 
@@ -75,7 +75,7 @@ popover button {
 
     &.active {
         background: $accent;
-        color: $bg;
+        color: $fg-on-accent;
     }
 
     label {
