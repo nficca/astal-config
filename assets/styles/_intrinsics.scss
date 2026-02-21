@@ -104,3 +104,12 @@ popover modelbutton arrow {
     border: none;
     color: $fg;
 }
+
+// Switch styling inside popovers
+popover switch {
+    min-height: 20px;
+
+    &:checked {
+        background: $accent;
+    }
+}

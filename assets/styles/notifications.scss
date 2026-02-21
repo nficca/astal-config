@@ -1,0 +1,74 @@
+@use "colors" as *;
+
+.notification-center {
+    min-width: 300px;
+}
+
+.notification-header {
+    .notification-title {
+        font-size: 1em;
+        font-weight: 600;
+        opacity: 1;
+    }
+}
+
+.notification-list {
+    min-width: 300px;
+}
+
+.notification-empty {
+    padding: 24px;
+
+    label {
+        opacity: 0.5;
+    }
+}
+
+.notification-item {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid $border;
+    background: $bg;
+
+    &.urgency-critical {
+        border-color: $danger;
+        background: rgba($danger, 0.1);
+    }
+}
+
+.notification-icon {
+    min-width: 24px;
+    min-height: 24px;
+}
+
+.notification-summary {
+    font-weight: 600;
+    font-size: 1em;
+    opacity: 1;
+}
+
+.notification-body {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.notification-dismiss {
+    padding: 4px;
+    min-width: 0;
+    min-height: 0;
+}
+
+.notification-actions {
+    margin-top: 4px;
+}
+
+.notification-action {
+    padding: 6px 12px;
+    border: 1px solid $border;
+    border-radius: 6px;
+    background: $bg;
+
+    &:hover {
+        background: $bg-hover;
+    }
+}
