@@ -1,7 +1,30 @@
 @use "colors" as *;
 
-menubutton.power {
-    > popover button label {
-        font-weight: 400;
+.power {
+    popover {
+        margin-top: 8px;
+
+        contents {
+            background-color: $bg;
+            color: $fg;
+
+            button {
+                padding: 2px 8px;
+                background: none;
+                border-radius: 4px;
+
+                &:hover {
+                    background-color: $bg-hover;
+                }
+
+                &:active {
+                    background-color: $bg-active;
+                }
+
+                label {
+                    font-weight: 400;
+                }
+            }
+        }
     }
 }

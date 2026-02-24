@@ -1,8 +1,74 @@
 @use "colors" as *;
 
 .audio {
-    label {
-        font-weight: 500;
-        min-width: 3.5em;
+    popover {
+        margin-top: 8px;
+
+        contents {
+            background-color: $bg;
+            color: $fg;
+
+            scale {
+                padding: 0;
+
+                trough {
+                    all: unset;
+                    background: $bg-hover;
+                    min-height: 18px;
+                    border-radius: 8px;
+                }
+
+                highlight {
+                    all: unset;
+                    min-height: 18px;
+                    border-radius: 8px;
+                    background: $accent;
+                }
+
+                slider {
+                    all: unset;
+                    border-radius: 8px;
+                    margin: 0;
+                }
+            }
+
+            label.subtitle {
+                font-size: 0.9em;
+                opacity: 0.6;
+            }
+
+            menubutton button {
+                contents {
+                    border: none;
+                    box-shadow: none;
+                    background: transparent;
+                }
+
+                background: $bg;
+                padding: 4px 8px;
+                border-radius: 4px;
+
+                &:hover {
+                    background-color: $bg-hover;
+                }
+
+                &:active {
+                    background-color: $bg-active;
+                }
+
+                &.highlight {
+                    background: $accent;
+                    color: $fg-on-accent;
+
+                    &:hover {
+                        background-color: $accent-hover;
+                    }
+
+                    &:active {
+                        background-color: $accent-active;
+                    }
+                }
+            }
+        }
     }
 }

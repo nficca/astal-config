@@ -66,8 +66,8 @@ function TrayItem({ item }: TrayItemProps) {
     };
 
     return (
-        <box class="tray-item" tooltipMarkup={tooltipMarkup} $={setup}>
+        <button $={setup} tooltipMarkup={tooltipMarkup}>
             <image gicon={gicon} />
-        </box>
+        </button>
     );
 }

@@ -7,9 +7,9 @@ $danger: #e74c3c;
 $fg-on-accent: #faf9f7;
 $shadow: rgba(0, 0, 0, 0.15);
 
-$bg-hover: color.adjust($bg, $lightness: -10%);
-$bg-active: color.adjust($bg-hover, $lightness: -10%);
-$border: color.adjust($bg, $lightness: -10%);
-$accent-hover: color.adjust($accent, $lightness: -10%);
-$accent-border: color.adjust($accent, $lightness: -10%);
-$accent-active: color.adjust($accent-hover, $lightness: -10%);
+$bg-hover: color.adjust($bg, $lightness: -5%);
+$bg-active: color.adjust($bg-hover, $lightness: -5%);
+$border: color.adjust($bg, $lightness: -5%);
+$accent-hover: color.adjust($accent, $lightness: -5%);
+$accent-border: color.adjust($accent, $lightness: -5%);
+$accent-active: color.adjust($accent-hover, $lightness: -5%);

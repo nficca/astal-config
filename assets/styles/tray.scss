@@ -1,21 +1,34 @@
 @use "colors" as *;
 
+@mixin interactive($hover-bg, $active-bg, $vpad, $hpad) {
+    padding: $vpad $hpad;
+    background: none;
+    border-radius: 4px;
+
+    &:hover {
+        background-color: $hover-bg;
+    }
+
+    &:active {
+        background-color: $active-bg;
+    }
+}
+
 .tray {
-    .tray-item {
-        padding: 2px 4px;
-        border-radius: 4px;
+    > button {
+        @include interactive($bg-hover, $bg-active, 1px, 2px);
 
-        &:hover {
-            background: $bg-hover;
-        }
-
-        &:active {
-            background: $bg-active;
-        }
-
-        image {
+        > image {
             -gtk-icon-style: symbolic;
+        }
+
+        > popover > contents {
+            background: $bg;
             color: $fg;
+
+            modelbutton {
+                @include interactive($bg-hover, $bg-active, 2px, 8px);
+            }
         }
     }
 }

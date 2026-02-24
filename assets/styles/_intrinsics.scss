@@ -1,6 +1,5 @@
 @use "colors" as *;
 
-// Base popover styling - applies to all popovers
 popover {
     margin-top: 8px;
 
@@ -15,30 +14,93 @@ popover {
         border-radius: 8px;
         box-shadow: 0 4px 12px $shadow;
     }
+
+    modelbutton arrow {
+        -gtk-icon-style: symbolic;
+        background: transparent;
+        border: none;
+        color: $fg;
+    }
 }
 
-// MenuButtons inside popovers (secondary/nested context)
-// Top-level bar menubuttons should use bar-component mixin instead
+label {
+    font-size: 1em;
+    font-weight: 400;
+
+    &.label-subtitle {
+        font-size: 0.85em;
+        opacity: 0.7;
+    }
+
+    &.label-h1 {
+        font-size: 1.15em;
+        font-weight: 600;
+    }
+
+    &.label-h2 {
+        font-size: 1em;
+        font-weight: 600;
+    }
+}
+
+button {
+    padding: 2px 12px;
+    background: $bg;
+
+    &:hover {
+        background: $bg-hover;
+    }
+
+    &:active {
+        background: $bg-active;
+    }
+
+    &.highlight {
+        background: $accent;
+
+        &:hover {
+            background: $accent-hover;
+        }
+
+        &:active {
+            background: $accent-active;
+        }
+    }
+}
+
 menubutton {
     > button {
-        padding: 0;
+        padding: 2px 12px;
         background: $bg;
-        border-radius: 8px;
-        border: 1px solid $border;
 
         &:hover {
             background: $bg-hover;
         }
 
-        contents {
-            border: none;
-            box-shadow: none;
-            background: transparent;
+        &:active {
+            background: $bg-active;
+        }
+    }
+
+    &.highlight > button {
+        background: $accent;
+
+        &:hover {
+            background: $accent-hover;
+        }
+
+        &:active {
+            background: $accent-active;
         }
     }
 }
 
-// Slider styling - applies to all scale widgets
+menubutton > button contents {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+}
+
 scale {
     padding: 0;
 
@@ -63,50 +125,7 @@ scale {
     }
 }
 
-// List-item buttons inside popovers
-// (menubutton > button rule above has higher specificity for those cases)
-popover button {
-    background: transparent;
-    border-radius: 4px;
-    padding: 6px 10px;
-
-    &:hover {
-        background: $bg-hover;
-    }
-
-    &.highlight {
-        background: $accent;
-        color: $fg-on-accent;
-    }
-
-    label {
-        min-width: 0;
-    }
-}
-
-// Section-heading labels in popovers
-popover label {
-    font-size: 0.85em;
-    opacity: 0.7;
-}
-
-// Reset for labels inside interactive elements
-popover button label,
-popover menubutton label,
-popover modelbutton label {
-    font-size: unset;
-    opacity: unset;
-}
-
-popover modelbutton arrow {
-    -gtk-icon-style: symbolic;
-    background: transparent;
-    border: none;
-    color: $fg;
-}
-
-// Switch styling inside popovers
-popover switch {
+switch {
     min-height: 20px;
 
     &:checked {

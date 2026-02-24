@@ -54,7 +54,7 @@ export function Audio({ scroll_step }: AudioProps) {
 
     return (
         <menubutton class="audio bar-segment" $={setup}>
-            <box spacing={4}>
+            <box spacing={8}>
                 <image iconName={volumeIcon} />
                 <label label={volumeText} />
             </box>
@@ -116,7 +116,11 @@ function AudioOutputSelector({
 }: AudioOutputSelectorProps) {
     return (
         <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-            <label label="Output" halign={Gtk.Align.START} />
+            <label
+                label="Output"
+                class="subtitle"
+                halign={Gtk.Align.START}
+            />
             <menubutton>
                 <box hexpand>
                     <label

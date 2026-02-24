@@ -1,74 +1,59 @@
 @use "colors" as *;
 
-@mixin bar-segment-base {
+@mixin bar-segment {
     padding: 2px 16px;
     border-radius: 9999px;
-    border: 1px solid $border;
     background: $bg;
     color: $fg;
 }
 
-@mixin bar-segment-highlight {
+@mixin highlight {
     background: $accent;
-    border-color: $accent-border;
     color: $fg-on-accent;
 }
 
-@mixin bar-segment-btn-base {
+@mixin interactive($hover-bg, $active-bg) {
     &:hover {
-        background: $bg-hover;
+        background-color: $hover-bg;
     }
 
     &:active {
-        background: $bg-active;
-    }
-}
-
-@mixin bar-segment-btn-highlight {
-    &:hover {
-        background: $accent-hover;
-    }
-
-    &:active {
-        background: $accent-active;
+        background-color: $active-bg;
     }
 }
 
 .bar {
-    margin-left: 12px;
-    margin-right: 12px;
-    margin-top: 2px;
+    margin: 2px 12px 0;
 
-    box,
-    centerbox {
-        &.bar-segment {
-            @include bar-segment-base;
-
-            &.highlight {
-                @include bar-segment-highlight;
-            }
-        }
-    }
-
+    box.bar-segment,
+    centerbox.bar-segment,
     button.bar-segment {
-        @include bar-segment-base;
-        @include bar-segment-btn-base;
+        @include bar-segment;
 
         &.highlight {
-            @include bar-segment-highlight;
-            @include bar-segment-btn-highlight;
+            @include highlight;
         }
     }
 
-    menubutton.bar-segment {
-        > button {
-            @include bar-segment-base;
-            @include bar-segment-btn-base;
-        }
+    menubutton.bar-segment > button {
+        @include bar-segment;
+    }
 
-        &.highlight > button {
-            @include bar-segment-highlight;
-            @include bar-segment-btn-highlight;
-        }
+    menubutton.bar-segment.highlight > button {
+        @include highlight;
+    }
+
+    button.bar-segment,
+    menubutton.bar-segment > button {
+        @include interactive($bg-hover, $bg-active);
+    }
+
+    button.bar-segment.highlight,
+    menubutton.bar-segment.highlight > button {
+        @include interactive($accent-hover, $accent-active);
+    }
+
+    label {
+        font-weight: 400;
     }
 }

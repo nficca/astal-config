@@ -1,74 +1,112 @@
 @use "colors" as *;
 
+@mixin interactive {
+    background: none;
+    border-radius: 4px;
+
+    &:hover {
+        background-color: $bg-hover;
+    }
+
+    &:active {
+        background-color: $bg-active;
+    }
+}
+
 .notification-center {
-    min-width: 300px;
-}
+    margin-top: 8px;
 
-.notification-header {
-    .notification-title {
-        font-size: 1em;
-        font-weight: 600;
-        opacity: 1;
+    contents {
+        background-color: $bg;
+        color: $fg;
+
+        .main {
+            min-width: 400px;
+
+            .header {
+                margin-left: 6px;
+
+                switch {
+                    &:checked {
+                        background: $accent;
+                    }
+                }
+
+                label {
+                    font-size: 1.2em;
+                    font-weight: 600;
+                }
+
+                .clear-all {
+                    @include interactive;
+                }
+            }
+
+            .empty {
+                padding: 24px;
+
+                label {
+                    opacity: 0.5;
+                }
+            }
+        }
     }
 }
 
-.notification-list {
-    min-width: 300px;
+.notification-popups {
+    min-width: 400px;
 }
 
-.notification-empty {
-    padding: 24px;
-
-    label {
-        opacity: 0.5;
-    }
-}
-
-.notification-item {
+.notification {
     padding: 12px;
     border-radius: 8px;
     border: 1px solid $border;
     background: $bg;
 
-    &.urgency-critical {
-        border-color: $danger;
-        background: rgba($danger, 0.1);
+    .icon {
+        min-width: 48px;
+        min-height: 48px;
     }
-}
 
-.notification-icon {
-    min-width: 24px;
-    min-height: 24px;
-}
+    .summary {
+        font-size: 0.9em;
+        font-weight: 600;
+    }
 
-.notification-summary {
-    font-weight: 600;
-    font-size: 1em;
-    opacity: 1;
-}
+    .body {
+        font-size: 0.9em;
+        opacity: 0.8;
+    }
 
-.notification-body {
-    font-size: 0.9em;
-    opacity: 0.8;
-}
+    .dismiss {
+        @include interactive;
 
-.notification-dismiss {
-    padding: 4px;
-    min-width: 0;
-    min-height: 0;
-}
+        min-width: 16px;
+        min-height: 16px;
+        padding: 2px;
+    }
 
-.notification-actions {
-    margin-top: 4px;
-}
+    .actions {
+        button.action {
+            @include interactive;
 
-.notification-action {
-    padding: 6px 12px;
-    border: 1px solid $border;
-    border-radius: 6px;
-    background: $bg;
+            font-size: 0.9em;
+            padding: 2px 24px;
+            background: $bg;
+            border-radius: 9999px;
+            border: 1px solid $border;
 
-    &:hover {
-        background: $bg-hover;
+            &:hover {
+                background-color: $bg-hover;
+            }
+
+            &:active {
+                background-color: $bg-active;
+            }
+
+            label {
+                font-weight: 400;
+            }
+        }
     }
 }
