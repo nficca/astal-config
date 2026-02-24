@@ -1,4 +1,5 @@
 import Notifd from "gi://AstalNotifd";
+import Pango from "gi://Pango";
 import { Gtk } from "ags/gtk4";
 import { createBinding, createMemo, For } from "gnim";
 
@@ -45,6 +46,7 @@ export function Notification({ notification }: NotificationProps) {
                             class="summary"
                             halign={Gtk.Align.START}
                             wrap
+                            wrapMode={Pango.WrapMode.WORD_CHAR}
                             maxWidthChars={50}
                             xalign={0}
                         />
@@ -54,6 +56,7 @@ export function Notification({ notification }: NotificationProps) {
                                 label={notification.body}
                                 halign={Gtk.Align.START}
                                 wrap
+                                wrapMode={Pango.WrapMode.WORD_CHAR}
                                 maxWidthChars={50}
                                 xalign={0}
                             />
