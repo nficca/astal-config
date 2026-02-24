@@ -43,7 +43,7 @@ export function Audio({ scroll_step }: AudioProps) {
         const scrollController = new Gtk.EventControllerScroll();
         scrollController.set_flags(Gtk.EventControllerScrollFlags.VERTICAL);
         scrollController.connect("scroll", (_ctrl, _dx, dy) => {
-            const current = Math.trunc(speaker.volume * 100);
+            const current = Math.round(speaker.volume * 100);
             const delta = dy < 0 ? scroll_step : -scroll_step;
             const round = dy < 0 ? ceil_to_multiple : floor_to_multiple;
             const next = round(current + delta, scroll_step) / 100;
