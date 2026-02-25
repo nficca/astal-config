@@ -116,11 +116,7 @@ function AudioOutputSelector({
 }: AudioOutputSelectorProps) {
     return (
         <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-            <label
-                label="Output"
-                class="subtitle"
-                halign={Gtk.Align.START}
-            />
+            <label label="Output" class="subtitle" halign={Gtk.Align.START} />
             <menubutton>
                 <box hexpand>
                     <label
