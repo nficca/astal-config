@@ -2,6 +2,9 @@ import Notifd from "gi://AstalNotifd";
 import Pango from "gi://Pango";
 import { Gtk } from "ags/gtk4";
 import { createBinding, createMemo, For } from "gnim";
+import * as Applications from "../../services/applications";
+import GdkPixbuf from "gi://GdkPixbuf";
+import Gdk from "gi://Gdk?version=4.0";
 
 export function getUrgencyClass(notification: Notifd.Notification): string {
     switch (notification.urgency) {
@@ -19,7 +22,8 @@ interface NotificationProps {
 }
 
 export function Notification({ notification }: NotificationProps) {
-    const iconName = notification.appIcon || "dialog-information-symbolic";
+    const iconName = findNotificationIconName(notification);
+    const imagePath = notification.get_hint("image-path")?.get_string()[0];
 
     return (
         <box
@@ -27,13 +31,36 @@ export function Notification({ notification }: NotificationProps) {
             orientation={Gtk.Orientation.HORIZONTAL}
             spacing={16}
         >
-            <image
-                class="icon"
-                iconName={iconName}
-                pixelSize={48}
-                halign={Gtk.Align.START}
-                valign={Gtk.Align.START}
-            />
+            {imagePath && imagePath !== iconName ? (
+                <overlay halign={Gtk.Align.START} valign={Gtk.Align.START}>
+                    <image
+                        paintable={Gdk.Texture.new_for_pixbuf(
+                            GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                                imagePath,
+                                48,
+                                -1,
+                                true,
+                            ),
+                        )}
+                        pixelSize={48}
+                    />
+                    <image
+                        $type="overlay"
+                        iconName={iconName}
+                        pixelSize={24}
+                        halign={Gtk.Align.END}
+                        valign={Gtk.Align.END}
+                    />
+                </overlay>
+            ) : (
+                <image
+                    class="icon"
+                    iconName={iconName}
+                    pixelSize={48}
+                    halign={Gtk.Align.START}
+                    valign={Gtk.Align.START}
+                />
+            )}
             <box orientation={Gtk.Orientation.VERTICAL} spacing={16}>
                 <overlay>
                     <box
@@ -112,4 +139,16 @@ function NotificationActionButtons({
             </For>
         </box>
     );
+}
+
+function findNotificationIconName(notification: Notifd.Notification): string {
+    if (notification.appIcon) return notification.appIcon;
+
+    const appIconFromName = Applications.find(notification.app_name)?.icon_name;
+    if (appIconFromName) return appIconFromName;
+
+    const imagePath = notification.get_hint("image-path")?.get_string()[0];
+    if (imagePath) return imagePath;
+
+    return "dialog-information-symbolic";
 }
