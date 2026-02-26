@@ -20,46 +20,7 @@ export function Notification({ notification }: NotificationProps) {
         >
             <Image notification={notification} />
             <box orientation={Gtk.Orientation.VERTICAL} spacing={16}>
-                <overlay>
-                    <box
-                        orientation={Gtk.Orientation.VERTICAL}
-                        spacing={8}
-                        hexpand
-                    >
-                        <label
-                            label={notification.summary}
-                            class="summary"
-                            halign={Gtk.Align.START}
-                            wrap
-                            wrapMode={Pango.WrapMode.WORD_CHAR}
-                            maxWidthChars={50}
-                            xalign={0}
-                        />
-                        {notification.body && (
-                            <label
-                                class="body"
-                                label={notification.body}
-                                halign={Gtk.Align.START}
-                                wrap
-                                wrapMode={Pango.WrapMode.WORD_CHAR}
-                                maxWidthChars={50}
-                                xalign={0}
-                            />
-                        )}
-                    </box>
-                    <button
-                        $type="overlay"
-                        class="dismiss"
-                        halign={Gtk.Align.END}
-                        valign={Gtk.Align.START}
-                        onClicked={() => notification.dismiss()}
-                    >
-                        <image
-                            iconName="window-close-symbolic"
-                            pixelSize={16}
-                        />
-                    </button>
-                </overlay>
+                <Content notification={notification} />
                 <ActionButtons notification={notification} />
             </box>
         </box>
@@ -90,7 +51,7 @@ function Image({
                 pixelSize={pixelSize}
                 iconName={image.value}
                 halign={isOverlayed ? Gtk.Align.END : Gtk.Align.CENTER}
-                valign={isOverlayed ? Gtk.Align.END : Gtk.Align.CENTER}
+                valign={isOverlayed ? Gtk.Align.START : Gtk.Align.START}
             />
         ) : (
             <image
@@ -108,7 +69,7 @@ function Image({
                     ),
                 )}
                 halign={isOverlayed ? Gtk.Align.END : Gtk.Align.CENTER}
-                valign={isOverlayed ? Gtk.Align.END : Gtk.Align.CENTER}
+                valign={isOverlayed ? Gtk.Align.START : Gtk.Align.START}
             />
         );
     };
@@ -123,6 +84,48 @@ function Image({
     } else {
         return imageToGObject(images.primary, pixelSize);
     }
+}
+
+interface ContentProps {
+    notification: Notifd.Notification;
+}
+
+function Content({ notification }: ContentProps) {
+    return (
+        <overlay>
+            <box orientation={Gtk.Orientation.VERTICAL} spacing={8} hexpand>
+                <label
+                    label={notification.summary}
+                    class="summary"
+                    halign={Gtk.Align.START}
+                    wrap
+                    wrapMode={Pango.WrapMode.WORD_CHAR}
+                    maxWidthChars={50}
+                    xalign={0}
+                />
+                {notification.body && (
+                    <label
+                        class="body"
+                        label={notification.body}
+                        halign={Gtk.Align.START}
+                        wrap
+                        wrapMode={Pango.WrapMode.WORD_CHAR}
+                        maxWidthChars={50}
+                        xalign={0}
+                    />
+                )}
+            </box>
+            <button
+                $type="overlay"
+                class="dismiss"
+                halign={Gtk.Align.END}
+                valign={Gtk.Align.START}
+                onClicked={() => notification.dismiss()}
+            >
+                <image iconName="window-close-symbolic" pixelSize={16} />
+            </button>
+        </overlay>
+    );
 }
 
 interface ActionButtonsProps {
