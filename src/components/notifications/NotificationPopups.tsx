@@ -1,6 +1,6 @@
 import Notifd from "gi://AstalNotifd";
 import { createEffect, createMemo, createState, For } from "gnim";
-import { Notification } from "./shared";
+import { Notification } from "./Notification";
 import { Gtk } from "ags/gtk4";
 
 const notifd = Notifd.get_default();

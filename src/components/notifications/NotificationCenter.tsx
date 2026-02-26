@@ -1,7 +1,7 @@
 import Notifd from "gi://AstalNotifd";
 import { Gtk } from "ags/gtk4";
 import { Accessor, createBinding, createComputed, For } from "gnim";
-import { getUrgencyClass, Notification } from "./shared";
+import { Notification } from "./Notification";
 
 const notifd = Notifd.get_default();
 

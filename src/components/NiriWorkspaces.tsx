@@ -2,7 +2,7 @@ import { Gdk } from "ags/gtk4";
 import AstalNiri from "gi://AstalNiri?version=0.1";
 import Gtk from "gi://Gtk?version=4.0";
 import { createBinding, createMemo, For, With } from "gnim";
-import * as applications from "../services/applications";
+import * as Applications from "../services/applications";
 const niri = AstalNiri.get_default();
 
 export type NiriWorkspacesProps = {
@@ -89,7 +89,7 @@ type WorkspaceWindowProps = {
 };
 
 function WorkspaceWindow({ window }: WorkspaceWindowProps) {
-    const app = createBinding(window, "app_id").as(id => applications.find(id));
+    const app = createBinding(window, "app_id").as(id => Applications.find(id));
 
     return (
         <box>
