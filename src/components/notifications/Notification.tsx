@@ -60,7 +60,7 @@ export function Notification({ notification }: NotificationProps) {
                         />
                     </button>
                 </overlay>
-                <NotificationActionButtons notification={notification} />
+                <ActionButtons notification={notification} />
             </box>
         </box>
     );
@@ -125,13 +125,11 @@ function Image({
     }
 }
 
-interface NotificationActionButtonsProps {
+interface ActionButtonsProps {
     notification: Notifd.Notification;
 }
 
-function NotificationActionButtons({
-    notification,
-}: NotificationActionButtonsProps) {
+function ActionButtons({ notification }: ActionButtonsProps) {
     const rawActions = createBinding(notification, "actions");
     const actions = rawActions.as(actions =>
         actions.filter(action => action.id !== "default"),
