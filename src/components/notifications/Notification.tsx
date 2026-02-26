@@ -79,11 +79,11 @@ function Image({
 }: ImageProps) {
     const images = getNotificationImages(notification);
 
-    const imageToGtkObject = (
+    const imageToGObject = (
         image: NotificationImage,
         pixelSize: number,
         isOverlayed = false,
-    ) => {
+    ): GObject.Object => {
         return image.type === "icon" ? (
             <image
                 $type={isOverlayed ? "overlay" : undefined}
@@ -113,12 +113,12 @@ function Image({
     if (images.secondary) {
         return (
             <overlay halign={Gtk.Align.START} valign={Gtk.Align.START}>
-                {imageToGtkObject(images.primary, pixelSize)}
-                {imageToGtkObject(images.secondary, overlayIconPixelSize, true)}
+                {imageToGObject(images.primary, pixelSize)}
+                {imageToGObject(images.secondary, overlayIconPixelSize, true)}
             </overlay>
         );
     } else {
-        return imageToGtkObject(images.primary, pixelSize);
+        return imageToGObject(images.primary, pixelSize);
     }
 }
 
