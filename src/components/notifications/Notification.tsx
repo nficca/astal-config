@@ -97,6 +97,9 @@ function Image({
                 $type={isOverlayed ? "overlay" : undefined}
                 pixelSize={pixelSize}
                 paintable={Gdk.Texture.new_for_pixbuf(
+                    // TODO: This has several issues that should be fixed:
+                    //  - Blocking I/O call on the UI thread
+                    //  - Crashes if the file doesn't exist
                     GdkPixbuf.Pixbuf.new_from_file_at_scale(
                         image.value,
                         pixelSize,
