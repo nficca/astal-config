@@ -11,30 +11,38 @@ export interface NotificationProps {
     notification: Notifd.Notification;
     onLeftClick?: () => void;
     onRightClick?: () => void;
+    onEnter?: () => void;
+    onLeave?: () => void;
 }
 
 export function Notification({
     notification,
     onLeftClick,
     onRightClick,
+    onEnter,
+    onLeave,
 }: NotificationProps) {
-    const leftClickHandler = onLeftClick ?? (() => {});
-    const rightClickHandler =
-        onRightClick ??
-        (() => {
-            notification.dismiss();
-        });
-
     const setup = (self: Gtk.Widget) => {
-        const leftClickController = new Gtk.GestureClick();
-        leftClickController.set_button(1);
-        leftClickController.connect("released", leftClickHandler);
-        self.add_controller(leftClickController);
+        if (onLeftClick) {
+            const leftClickController = new Gtk.GestureClick();
+            leftClickController.set_button(1);
+            leftClickController.connect("released", onLeftClick);
+            self.add_controller(leftClickController);
+        }
 
-        const rightClickController = new Gtk.GestureClick();
-        rightClickController.set_button(3);
-        rightClickController.connect("released", rightClickHandler);
-        self.add_controller(rightClickController);
+        if (onRightClick) {
+            const rightClickController = new Gtk.GestureClick();
+            rightClickController.set_button(3);
+            rightClickController.connect("released", onRightClick);
+            self.add_controller(rightClickController);
+        }
+
+        if (onEnter || onLeave) {
+            const motionController = new Gtk.EventControllerMotion();
+            if (onEnter) motionController.connect("enter", onEnter);
+            if (onLeave) motionController.connect("leave", onLeave);
+            self.add_controller(motionController);
+        }
     };
 
     return (

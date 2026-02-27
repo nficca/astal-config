@@ -108,7 +108,15 @@ export function NotificationPopups({
         >
             <For each={notifications}>
                 {([_id, notification]) => (
-                    <Notification notification={notification.notification} />
+                    <Notification
+                        notification={notification.notification}
+                        onEnter={() => {
+                            notification.timer.pause();
+                        }}
+                        onLeave={() => {
+                            notification.timer.start();
+                        }}
+                    />
                 )}
             </For>
         </box>
