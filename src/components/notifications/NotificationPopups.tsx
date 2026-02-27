@@ -1,5 +1,11 @@
 import Notifd from "gi://AstalNotifd";
-import { createEffect, createMemo, createState, For } from "gnim";
+import {
+    createBinding,
+    createEffect,
+    createMemo,
+    createState,
+    For,
+} from "gnim";
 import { Notification } from "./Notification";
 import { Gtk } from "ags/gtk4";
 
@@ -11,13 +17,14 @@ export function NotificationPopups() {
     const [notifications, setNotifications] = createState(
         new Map<number, Notifd.Notification>(),
     );
+    const dontDisturb = createBinding(notifd, "dontDisturb");
 
     const isEmpty = createMemo(() => notifications().size === 0);
 
     notifd.connect("notified", (_notifd, id, _replaced) => {
         const notification = notifd.get_notification(id);
 
-        if (!notification) return;
+        if (!notification || dontDisturb()) return;
 
         setNotifications(prev => {
             const next = new Map(prev);
