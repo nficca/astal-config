@@ -9,12 +9,38 @@ import GObject from "gnim/gobject";
 
 export interface NotificationProps {
     notification: Notifd.Notification;
+    onLeftClick?: () => void;
+    onRightClick?: () => void;
 }
 
-export function Notification({ notification }: NotificationProps) {
+export function Notification({
+    notification,
+    onLeftClick,
+    onRightClick,
+}: NotificationProps) {
+    const leftClickHandler = onLeftClick ?? (() => {});
+    const rightClickHandler =
+        onRightClick ??
+        (() => {
+            notification.dismiss();
+        });
+
+    const setup = (self: Gtk.Widget) => {
+        const leftClickController = new Gtk.GestureClick();
+        leftClickController.set_button(1);
+        leftClickController.connect("released", leftClickHandler);
+        self.add_controller(leftClickController);
+
+        const rightClickController = new Gtk.GestureClick();
+        rightClickController.set_button(3);
+        rightClickController.connect("released", rightClickHandler);
+        self.add_controller(rightClickController);
+    };
+
     return (
         <box
             class="notification"
+            $={setup}
             orientation={Gtk.Orientation.HORIZONTAL}
             spacing={16}
         >

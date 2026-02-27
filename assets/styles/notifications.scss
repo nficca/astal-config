@@ -63,6 +63,14 @@
     border: 1px solid $border;
     background: $bg;
 
+    &:hover {
+        background: linear-gradient(0deg, $bg-hover 0%, $bg 100%);
+    }
+
+    &:active {
+        background: linear-gradient(0deg, $bg-active 0%, $bg-hover 100%);
+    }
+
     .summary {
         font-size: 0.9em;
         font-weight: 600;
