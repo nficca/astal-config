@@ -5,41 +5,77 @@ import {
     createMemo,
     createState,
     For,
+    onCleanup,
 } from "gnim";
 import { Notification } from "./Notification";
 import { Gtk } from "ags/gtk4";
+import { TickTimer } from "@/src/utils/timer";
+
+const DEFAULT_EXPIRY_TIME_MS = 5000;
 
 const notifd = Notifd.get_default();
 
-export function NotificationPopups() {
-    let root: Gtk.Root | null;
+type ExpiringNotification = {
+    notification: Notifd.Notification;
+    timer: TickTimer;
+};
 
+export interface NotificationPopupsProps {
+    window: Gtk.Window;
+    expiryTimeMs: number;
+}
+
+export function NotificationPopups({
+    window,
+    expiryTimeMs = DEFAULT_EXPIRY_TIME_MS,
+}: NotificationPopupsProps): Gtk.Box {
     const [notifications, setNotifications] = createState(
-        new Map<number, Notifd.Notification>(),
+        new Map<number, ExpiringNotification>(),
     );
     const dontDisturb = createBinding(notifd, "dontDisturb");
-
     const isEmpty = createMemo(() => notifications().size === 0);
 
-    notifd.connect("notified", (_notifd, id, _replaced) => {
-        const notification = notifd.get_notification(id);
-
-        if (!notification || dontDisturb()) return;
+    const insertNotification = (notification: Notifd.Notification) => {
+        const timer = new TickTimer(expiryTimeMs, window, () => {
+            removeNotification(notification.id);
+        });
 
         setNotifications(prev => {
+            const existing = prev.get(notification.id);
+            existing?.timer.stop();
+
             const next = new Map(prev);
-            next.set(id, notification);
+            next.set(notification.id, { notification, timer });
             return next;
         });
-    });
 
-    notifd.connect("resolved", (_notifd, id, _reason) => {
+        timer.start();
+    };
+
+    const removeNotification = (id: number) => {
         setNotifications(prev => {
+            const existing = prev.get(id);
+            existing?.timer.stop();
+
             const next = new Map(prev);
             next.delete(id);
             return next;
         });
-    });
+    };
+
+    const notifiedHandler = notifd.connect(
+        "notified",
+        (_notifd, id, _replaced) => {
+            const notification = notifd.get_notification(id);
+            if (!notification || dontDisturb()) return;
+
+            insertNotification(notification);
+        },
+    );
+
+    const resolvedHandler = notifd.connect("resolved", (_notifd, id, _reason) =>
+        removeNotification(id),
+    );
 
     // When going from 1->0 notifications, Gtk does not always clear the screen
     // to remove the last notification. This appears to be a bug in Wayland when
@@ -52,29 +88,29 @@ export function NotificationPopups() {
     createEffect(() => {
         const empty = isEmpty();
 
-        if (!root) return;
-
         if (empty) {
-            root.hide();
+            window.hide();
         } else {
-            root.show();
+            window.show();
         }
+    });
+
+    onCleanup(() => {
+        notifd.disconnect(notifiedHandler);
+        notifd.disconnect(resolvedHandler);
     });
 
     return (
         <box
             class="notification-popups"
             orientation={Gtk.Orientation.VERTICAL}
-            onRealize={self => {
-                root = self.get_root();
-            }}
             spacing={4}
         >
             <For each={notifications}>
                 {([_id, notification]) => (
-                    <Notification notification={notification} />
+                    <Notification notification={notification.notification} />
                 )}
             </For>
         </box>
-    );
+    ) as Gtk.Box;
 }

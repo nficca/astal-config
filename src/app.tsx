@@ -1,8 +1,8 @@
 import app from "ags/gtk4/app";
-import { Astal } from "ags/gtk4";
+import { Astal, Gtk } from "ags/gtk4";
 import { Bar } from "./components/Bar";
 import { NotificationPopups } from "./components/notifications";
-import { createBinding, For, This } from "gnim";
+import { createBinding, For, jsx, This } from "gnim";
 import style from "../assets/styles/index.scss";
 
 const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
@@ -34,9 +34,12 @@ app.start({
                             application={app}
                             layer={Astal.Layer.OVERLAY}
                             exclusivity={Astal.Exclusivity.NORMAL}
-                        >
-                            <NotificationPopups />
-                        </window>
+                            $={(self: Gtk.Window) => {
+                                self.set_child(
+                                    jsx(NotificationPopups, { window: self }),
+                                );
+                            }}
+                        />
                     </This>
                 )}
             </For>
