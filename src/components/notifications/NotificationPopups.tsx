@@ -110,12 +110,9 @@ export function NotificationPopups({
                 {([_id, notification]) => (
                     <Notification
                         notification={notification.notification}
-                        onEnter={() => {
-                            notification.timer.pause();
-                        }}
-                        onLeave={() => {
-                            notification.timer.start();
-                        }}
+                        onRightClick={() => notification.notification.dismiss()}
+                        onEnter={notification.timer.pause}
+                        onLeave={notification.timer.start}
                     />
                 )}
             </For>
