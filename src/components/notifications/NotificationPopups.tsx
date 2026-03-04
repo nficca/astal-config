@@ -22,7 +22,7 @@ type ExpiringNotification = {
 
 export interface NotificationPopupsProps {
     window: Gtk.Window;
-    expiryTimeMs: number;
+    expiryTimeMs?: number;
 }
 
 export function NotificationPopups({
